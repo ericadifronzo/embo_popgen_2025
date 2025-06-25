@@ -1,0 +1,259 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Population inferences from finite samples},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Population inferences from finite samples}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+We sequenced several genomes of bears and assigned each individual
+genotype. What is the frequency of a certain allele at the population
+level?
+
+\pandocbounded{\includegraphics[keepaspectratio]{Images/BrownBear.jpg}}
+
+We have only a sample of the entire population of bears but we want to
+make inferences at the whole population level.
+
+Our sample contains information for 100 individuals with the following
+genotypes: 63 AA, 34 AG, 3 GG. A frequentist estimate of the frequency
+of G is given by: \((34+(3\times2))/200=40/200=0.20\).
+
+\paragraph{What is the posterior distribution for the population
+frequency of
+G?}\label{what-is-the-posterior-distribution-for-the-population-frequency-of-g}
+
+The first thing we need to do is define our likelihood model. We can
+imagine to randomly sample one allele from the population and each time
+the allele can be either G or not.
+
+This is a set of Bernoulli trials and we can use of Binomial
+distribution as likelihood function.
+
+The Binomial likelihood is \begin{equation}
+     P(k|p,n) = ( \genfrac{}{}{0pt}{}{n}{k} ) p^k(1-p)^{n-k}
+\end{equation} where \(k\) is the number of successes (i.e.~the event of
+sampling a G), \(p\) is the proportion of \(G\) alleles we have
+(i.e.~the probability of a success), and \(n\) is the number of alleles
+we sample.
+
+Recall that \begin{equation}
+    (\genfrac{}{}{0pt}{}{n}{k}) = \frac{n!}{k!(n-k)!}
+\end{equation}
+
+Note that the combinatorial term does not contain \(p\).
+
+What is the maximum likelihood estimate of \(p\)?
+
+You may recall that it is \(\hat{p}=\frac{k}{n}\). Note that the
+combinatorial terms does not affect this estimate.
+
+The second thing we need to do is define a prior probability for \(p\).
+
+What is the interval of values that \(p\) can take?
+
+It is \([0,1]\), as we express frequencies relative to the whole
+population/sample. It is convenient to choose a prior distribution which
+is conjugate to the Binomial.
+
+A Beta distribution is a conjugate prior in this case.
+
+Are certain values of \(p\) more likely to occur without observing the
+data?
+
+If that it is not the case, can we use the Beta distribution to generate
+a non-informative prior?
+
+We can choose \(Beta(\alpha,\beta)\), which is defined as
+\begin{equation}
+    P(p) = \frac{1}{B(\alpha,\beta)} p^{\alpha-1}(1-p)^{\beta-1}
+\end{equation} where \(\frac{1}{B(\alpha,\beta)}\) is simply a
+normalization term which does not depend on \(p\). Furthermore, for
+\(\alpha = \beta = 1\), this is the uniform distribution, and thus
+yields a non-informative prior.
+
+The full model can be expressed as \(P(p|k,n) \propto P(k|p,n)P(p)\).
+
+The closed form for the posterior distribution given our choices for the
+likelihood and prior functions is
+
+\begin{equation}
+    P(p|k,n) \propto p^{k+\alpha-1}(1-p)^{n-k+\beta-1}
+\end{equation}
+
+The posterior distribution (Beta-Binomial model) is a Beta distribution
+with parameters \(k+\alpha\) and \(n-k+\beta\).
+
+If we set \(\alpha=\beta=1\) then \(P(p|k,n)=Beta(k+1,n-k+1)\). What are
+\(k\) and \(n\)?
+
+\(n\) is the number of alleles we sample and \(k\) is the occurrence of
+allele \(G\) in our sample.
+
+\textbf{A)}
+
+Plot the posterior probability, assuming a uniform prior (alpha = beta =
+1). Then calculate the maximum a posteriori value, 95\% credible
+intervals, and notable quantiles.
+
+What happens to the distribution if we have only 10 samples (with the
+sample allele frequency of 0.20)?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#...}
+\end{Highlighting}
+\end{Shaded}
+
+We can think of a more informative prior. The genome-wide distribution
+of allele frequencies for human populations as a particular shape. This
+is called a site frequency spectrum (SFS) or allele frequency spectrum
+(AFS).
+
+\pandocbounded{\includegraphics[keepaspectratio]{Images/AFS.png}}
+
+We can have another view at it by plotting the minor allele counts (MAC)
+distribution.
+
+\pandocbounded{\includegraphics[keepaspectratio]{Images/MAC.png}}
+
+Does this distribution fit with a uniform prior? Can we use a conjugate
+(Beta) function to model this distribution?
+
+Also, we don't know \emph{a priori} whether the allele we are interested
+in is the minor allele. Therefore a prior distribution with more density
+at both low and high frequencies might be more appropriate.
+
+\textbf{B)}
+
+Recalculate the posterior distribution of \(p\) using an informative
+prior (make your own choices regarding the parameter for the Beta
+distribution) both in the case of 100 and 10 samples.
+
+Discuss how these results compare to the previous ones obtained in point
+A.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#...}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{C)} (bonus)
+
+Calculate the Bayes factor for a model with \(p<=0.5\) vs a model with
+\(p>0.5\). Note that these models are equally probable a priori.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#...}
+\end{Highlighting}
+\end{Shaded}
+
+
+\end{document}

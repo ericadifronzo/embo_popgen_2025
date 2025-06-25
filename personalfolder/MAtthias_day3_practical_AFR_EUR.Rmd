@@ -1,0 +1,160 @@
+---
+title: "lalala"
+output: html_document
+date: "2025-06-25"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{python}
+import msprime
+import numpy as np
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+```
+
+```{python}
+# add demography
+demography = msprime.Demography()
+demography.add_population(name="AFR", initial_size=30_000)
+demography.add_population(name="EUR", initial_size=20_000)
+```
+
+```{python}
+
+```
+
+
+
+
+
+# afternoon
+
+```{python}
+N1 = 150000
+N2 = 5000
+# parameters
+Nanc=7e6
+m=0
+```
+
+```{python}
+mut= 3.5e-9
+sample_sizes = [50,50]
+length = 1000
+seed = 4711
+reco = 8.4e-9
+demography=[]
+num_simulations = 10
+```
+
+
+```{python}
+def IM_demography(N1,N2,Nanc, m, Tsplit):
+  # add demography
+  demography = msprime.Demography()
+  demography.add_population(name="N1", initial_size=N1)
+  demography.add_population(name="N2", initial_size=N2)
+  demography.add_population(name="ANC", initial_size=Nanc)
+  demography.set_symmetric_migration_rate(["N1", "N2"], rate=m)
+  demography.add_population_split(time=Tsplit, derived=["N1", "N2"], ancestral="ANC") 
+  return(demography)
+```
+
+```{python}
+def repeat_simulations_with_demography(mut, sample_sizes, length, reco, demography, num_simulations, seed=None):
+    results = []
+    for i in tqdm(range(num_simulations), desc="Running simulations"):
+        if seed is not None:
+            np.random.seed(seed + i)
+        
+        # Define sample sets for each population (e.g., 10 samples in N1, 10 in N2)
+        samples = [
+            msprime.SampleSet(sample_sizes[0], population="N1", ploidy=2),
+            msprime.SampleSet(sample_sizes[1], population="N2", ploidy=2)
+        ]
+        # Generate the demography
+        demography=IM_demography(N1,N2,Nanc,m, Tsplit)
+        
+        
+        ts = msprime.sim_ancestry(
+            samples=samples,
+            recombination_rate=reco,
+            sequence_length=length,
+            demography=demography,
+            random_seed=np.random.randint(99999999)
+        )
+
+        mutated_ts = msprime.sim_mutations(ts, rate=mut, random_seed=np.random.randint(99999999))
+
+        diversity = mutated_ts.diversity()
+        tajimas_d = mutated_ts.Tajimas_D()
+        allele_frequency_spectrum = mutated_ts.allele_frequency_spectrum(polarised=True)
+        results.append((mutated_ts, None, diversity, tajimas_d, allele_frequency_spectrum))
+    return results
+```
+
+```{python}
+def repeat_simulations(mut, sample_sizes, length, reco, num_simulations, seed=None):
+    results = []
+    N1=150000
+    N2=5000
+    # Parameters
+    Nanc=7e6
+    m=0
+    for i in tqdm(range(num_simulations), desc="Running simulations"):
+        if seed is not None:
+            np.random.seed(seed + i)
+        # Define sample sets for each population (e.g., 10 samples in N1, 10 in N2)
+        samples = [
+            msprime.SampleSet(sample_sizes[0], population="N1", ploidy=2),
+            msprime.SampleSet(sample_sizes[1], population="N2", ploidy=2)
+        ]
+        # Generate the demography
+        Tsplit=random.normalvariate(8000, 1000)
+        demography=IM_demography(N1,N2,Nanc,m, Tsplit)
+        ts = msprime.sim_ancestry(
+            samples=samples,
+            recombination_rate=reco,
+            sequence_length=length,
+            demography=demography,
+            random_seed=np.random.randint(99999999)
+        )
+        mutated_ts = msprime.sim_mutations(ts, rate=mut, random_seed=np.random.randint(99999999))
+        diversity = mutated_ts.diversity()
+        tajimas_d = mutated_ts.Tajimas_D()
+        allele_frequency_spectrum = mutated_ts.allele_frequency_spectrum(polarised=True)
+        results.append((diversity, tajimas_d, allele_frequency_spectrum))
+    return results
+```
+
+
+
+
+
+
+
+
