@@ -101,6 +101,45 @@ params = {
 ```
 
 ```{python}
+sample_sizes = [50, 50]  # Sample sizes for two populations
+seed = None               # Random seed
+
+# Output directory
+output_directory = "."
+# Output file name
+output_file = os.path.join(output_directory, "mosquito-task2.csv")
+
+# Open the output file in write mode
+with open(output_file, "w", newline="") as csvfile:
+    writer = csv.writer(csvfile, delimiter=",")
+
+    # Write header
+    writer.writerow(["N1", "N2", "T_split", "MigRate", "Fst", "dxy", "segsites1", "segsites2", "pi1", "pi2", "tajima1", "tajima2"])
+
+```
+
+```{python}
+
+    # Perform simulations
+    for i in tqdm.tqdm(range(1000)):
+
+        params["N1"] = 150_000
+        params["N2"] = 5_000
+        params["mig"] = 0
+        params["T_split"] = max(1000,int(np.random.normal(loc=8000, scale=2000, size=1)[0]))
+                        
+        ts = im(params, sample_sizes, seed, params["reco"])
+
+        dxy = ts.divergence(sample_sets=[ts.samples(population=0), ts.samples(population=1)])
+
+        Fst = ts.Fst(sample_sets=[ts.samples(population=0), ts.samples(population=1)])
+
+        ssites = ts.segregating_sites(sample_sets=[ts.samples(population=0), ts.samples(population=1)])
+        div = ts.diversity(sample_sets=[ts.samples(population=0), ts.samples(population=1)])
+        tajima = ts.Tajimas_D(sample_sets=[ts.samples(population=0), ts.samples(population=1)])
+    
+        # Write data to file or print data
+        writer.writerow([params["N1"], params["N2"], params["T_split"], params["mig"], Fst, dxy, ssites[0], ssites[1], div[0], div[1], tajima[0], tajima[1]])
 
 ```
 
